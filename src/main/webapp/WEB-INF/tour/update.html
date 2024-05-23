@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="/layout :: head">
+    <title>Update Customer</title>
+</head>
+<body>
+<h3>Update Customer</h3>
+<p>
+    <a th:href="@{/customers}">
+        Back to customer list
+    </a>
+</p>
+<div id="form">
+    <form th:action="@{/tours/update/{id}(id=${tour.id})}" th:object="${tour}"
+          method="POST" novalidate="novalidate">
+        <input type="hidden" th:field="*{id}"/>
+
+        <div>
+            <label for="code">code</label>
+            <input type="text" id="code" th:field="*{code}"/>
+            <div th:if="${#fields.hasErrors('code')}" th:errors="*{code}">Name Error</div>
+
+        </div>
+
+        <div>
+            <label for="destination">destination</label>
+            <input type="text" id="destination" th:field="*{destination}"/>
+            <div th:if="${#fields.hasErrors('destination')}" th:errors="*{destination}">Name Error</div>
+
+        </div>
+
+        <div>
+            <label for="price">price</label>
+            <input type="text" id="price" th:field="*{price}"/>
+            <div th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Name Error</div>
+
+        </div>
+            <label for="type">Type</label>
+            <select id="type" th:field="*{type}">
+                <option th:each="p : ${types}" th:value="${p.id}" th:text="${p.name}"></option>
+            </select>
+        </div>
+        <input type="submit" value="Edit"/>
+    </form>
+</div>
+</body>
+</html>

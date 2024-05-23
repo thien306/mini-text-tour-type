@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="/layout :: head">
+    <title>List Tours</title>
+</head>
+<body>
+<h3>Tours</h3>
+<p>
+    <a th:href="@{/tours/create}">
+        Add new tour
+    </a>
+</p>
+<p>
+    <a th:href="@{/types}">
+        types
+    </a>
+</p>
+
+<div style="margin-bottom: 10px; margin-left: 110px">
+    <form th:action="@{/tours/search}" method="get">
+        <label><input type="text" name="search" th:value="${search}"></label>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+</div>
+
+<div class="notify">
+    <div th:if="${message}">
+        <span th:text="${message}"></span>
+    </div>
+</div>
+
+<table id="customers">
+    <thead>
+    <tr>
+        <th>STT</th>
+        <th>Code</th>
+        <th>Destination</th>
+        <th>Price</th>
+        <th>type</th>
+        <th>Update</th>
+        <th>Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="c,cStatus : ${tours}">
+        <td th:text="${tours.number * tours.size + cStatus.index + 1}"></td>
+        <td th:text="${c.getCode()}"></td>
+        <td th:text="${c.getDestination()}"></td>
+        <td th:text="${c.getPrice()}"></td>
+        <td th:text="${c.getType().getName()}"></td>
+        <td><a th:href="@{/tours/update/{id}(id=${c.getId()})}">update</a></td>
+        <td><a th:href="@{/tours/delete/{id}(id=${c.getId()})}">delete</a></td>
+    </tr>
+    </tbody>
+</table>
+<div>
+    <a class="btn btn-primary" th:if="${tours.hasPrevious()}"
+       th:href="@{/tours(page=${tours.number - 1}, search=${search})}">Previous</a>
+    <span th:text="${tours.number + 1}"></span> | <span th:text="${tours.totalPages}"></span>
+    <a class="btn btn-primary" th:if="${tours.hasNext()}"
+       th:href="@{/tours(page=${tours.number + 1}, search=${search})}">Next</a>
+</div>
+
+<div>
+    <a th:if="${#strings.isNotEmpty(search)}" th:href="@{/tours}" class="btn btn-secondary">Back to tour list</a>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="/layout :: head">
+    <title>Update Type</title>
+</head>
+<body>
+<h3>Update Type</h3>
+<p>
+    <a th:href="@{/types}">
+        Back to type list
+    </a>
+</p>
+<div id="form">
+    <form th:action="@{/types/update/{id}(id=${type.id})}" th:object="${type}"
+          method="POST" novalidate="novalidate">
+        <input type="hidden" th:field="*{id}"/>
+        <div>
+            <label for="name">Name</label>
+            <input type="text" id="name" th:field="*{name}"/>
+            <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>
+        </div>
+        <input type="submit" value="Save"/>
+    </form>
+</div>
+</body>
+</html>
